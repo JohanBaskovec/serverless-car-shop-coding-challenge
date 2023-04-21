@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`vehicleController create should create vehicle when request is valid 1`] = `
+{
+  "body": "{"data":{"id":"vehicle-id","name":"vehicle-name"}}",
+  "statusCode": 200,
+}
+`;
+
+exports[`vehicleController create should return an error when request is invalid 1`] = `
+{
+  "body": "{"error":{"type":"ValidationError","message":"Validation failed"}}",
+  "statusCode": 400,
+}
+`;
+
+exports[`vehicleController getAll should return vehicles 1`] = `
+{
+  "body": "{"data":[]}",
+  "statusCode": 200,
+}
+`;
+
+exports[`vehicleController remove should remove vehicle when request is valid 1`] = `
+{
+  "body": "{"data":{"name":"response from Mango"}}",
+  "statusCode": 200,
+}
+`;
+
+exports[`vehicleController remove should return an error when id is missing 1`] = `
+{
+  "body": "{"error":{"type":"MissingPathParametersError","message":"Missing path parameters: id"}}",
+  "statusCode": 400,
+}
+`;
+
+exports[`vehicleController remove should return an error when vehicle doesn't exist 1`] = `
+{
+  "body": "{"error":{"type":"EntityDoesNotExistError","message":"Vehicle doesn't exist"}}",
+  "statusCode": 404,
+}
+`;
+
+exports[`vehicleController update should return an error when request is invalid 1`] = `
+{
+  "body": "{"error":{"type":"ValidationError","message":"Validation failed"}}",
+  "statusCode": 400,
+}
+`;
+
+exports[`vehicleController update should update vehicle when request is valid 1`] = `
+{
+  "body": "{"data":{"id":"vehicle-id","name":"vehicle-name"}}",
+  "statusCode": 200,
+}
+`;

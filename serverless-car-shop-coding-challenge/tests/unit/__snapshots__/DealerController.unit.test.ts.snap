@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`dealerController create should create dealer when request is valid 1`] = `
+{
+  "body": "{"data":{"id":"dealer-id","name":"dealer-name"}}",
+  "statusCode": 200,
+}
+`;
+
+exports[`dealerController create should return an error when request is invalid 1`] = `
+{
+  "body": "{"error":{"type":"ValidationError","message":"Validation failed"}}",
+  "statusCode": 400,
+}
+`;
+
+exports[`dealerController getAll should return dealers 1`] = `
+{
+  "body": "{"data":[]}",
+  "statusCode": 200,
+}
+`;
+
+exports[`dealerController remove should remove dealer when request is valid 1`] = `
+{
+  "body": "{"data":{"name":"response from Mango"}}",
+  "statusCode": 200,
+}
+`;
+
+exports[`dealerController remove should return an error when dealer doesn't exist 1`] = `
+{
+  "body": "{"error":{"type":"EntityDoesNotExistError","message":"Dealer doesn't exist"}}",
+  "statusCode": 404,
+}
+`;
+
+exports[`dealerController remove should return an error when id is missing 1`] = `
+{
+  "body": "{"error":{"type":"MissingPathParametersError","message":"Missing path parameters: id"}}",
+  "statusCode": 400,
+}
+`;
+
+exports[`dealerController update should return an error when request is invalid 1`] = `
+{
+  "body": "{"error":{"type":"ValidationError","message":"Validation failed"}}",
+  "statusCode": 400,
+}
+`;
+
+exports[`dealerController update should update dealer when request is valid 1`] = `
+{
+  "body": "{"data":{"id":"dealer-id","name":"dealer-name"}}",
+  "statusCode": 200,
+}
+`;

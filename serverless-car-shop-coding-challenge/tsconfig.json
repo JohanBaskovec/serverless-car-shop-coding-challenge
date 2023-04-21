@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "preserveConstEnums": true,
+    "strictNullChecks": true,
+    "sourceMap": true,
+    "allowJs": false,
+    "module": "CommonJS",
+    "target": "ESNext",
+    "lib": [
+      "ESNext"
+    ],
+    "outDir": ".build",
+    "moduleResolution": "NodeNext",
+    "esModuleInterop": true,
+    "rootDir": "./"
+  }
+}

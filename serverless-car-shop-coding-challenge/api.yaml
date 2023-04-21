@@ -1,0 +1,477 @@
+openapi: 3.0.3
+info:
+  title: API
+  description: API
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+components:
+  schemas:
+    MongoDocument:
+      type: object
+      properties:
+        _id:
+          type: string
+        __v:
+          type: number
+    FuelTypeEnum:
+      type: string
+      enum:
+        - petrol
+        - diesel
+        - eletric
+        - lpg
+        - hybrid
+    VehicleTypeEnum:
+      type: string
+      enum:
+        - cabriolet
+        - coupe
+        - estateCar
+        - suv
+        - saloon
+        - van
+        - smallCar
+        - other
+    TransmissionEnum:
+      type: string
+      enum:
+        - manual
+        - automatic
+        - semiAutomatic
+    Transmission:
+      type: array
+      items:
+        $ref: '#/components/schemas/TransmissionEnum'
+    FuelType:
+      type: array
+      items:
+        $ref: '#/components/schemas/FuelTypeEnum'
+    VehicleType:
+      type: array
+      items:
+        $ref: '#/components/schemas/VehicleTypeEnum'
+    Timestamps:
+      type: object
+      properties:
+        creationDate:
+          type: string
+        lastUpdateDate:
+          type: string
+
+    Vehicle:
+      type: object
+      required:
+        - _id
+        - __v
+        - make
+        - vehicleModel
+        - transmission
+        - fuelType
+        - mileage
+        - color
+        - dealer
+        - vehicleType
+        - creationDate
+        - lastUpdateDate
+      properties:
+        make:
+          type: string
+        vehicleModel:
+          type: string
+        transmission:
+          $ref: '#/components/schemas/TransmissionEnum'
+        fuelType:
+          $ref: '#/components/schemas/FuelTypeEnum'
+        mileage:
+          type: number
+        vehicleType:
+          $ref: '#/components/schemas/VehicleTypeEnum'
+        color:
+          type: string
+        dealer:
+          type: string
+      allOf:
+        - $ref: '#/components/schemas/Timestamps'
+        - $ref: '#/components/schemas/MongoDocument'
+
+    CreateVehicleDTO:
+      type: object
+      required:
+        - make
+        - vehicleModel
+        - transmission
+        - fuelType
+        - mileage
+        - color
+        - dealer
+        - vehicleType
+      properties:
+        make:
+          $ref: '#/components/schemas/Vehicle/properties/make'
+        vehicleModel:
+          $ref: '#/components/schemas/Vehicle/properties/vehicleModel'
+        transmission:
+          $ref: '#/components/schemas/Vehicle/properties/transmission'
+        fuelType:
+          $ref: '#/components/schemas/Vehicle/properties/fuelType'
+        mileage:
+          $ref: '#/components/schemas/Vehicle/properties/mileage'
+        color:
+          $ref: '#/components/schemas/Vehicle/properties/color'
+        dealer:
+          $ref: '#/components/schemas/Vehicle/properties/dealer'
+        vehicleType:
+          $ref: '#/components/schemas/Vehicle/properties/vehicleType'
+    UpdateVehicleDTO:
+      type: object
+      required:
+        - _id
+      properties:
+        _id:
+          type: string
+        make:
+          $ref: '#/components/schemas/Vehicle/properties/make'
+        vehicleModel:
+          $ref: '#/components/schemas/Vehicle/properties/vehicleModel'
+        transmission:
+          $ref: '#/components/schemas/Vehicle/properties/transmission'
+        fuelType:
+          $ref: '#/components/schemas/Vehicle/properties/fuelType'
+        mileage:
+          $ref: '#/components/schemas/Vehicle/properties/mileage'
+        color:
+          $ref: '#/components/schemas/Vehicle/properties/color'
+        dealer:
+          $ref: '#/components/schemas/Vehicle/properties/dealer'
+        vehicleType:
+          $ref: '#/components/schemas/Vehicle/properties/vehicleType'
+    CreateDealerDTO:
+      type: object
+      required:
+        - name
+        - vehicles
+      properties:
+        name:
+          $ref: '#/components/schemas/Dealer/properties/name'
+        vehicles:
+          $ref: '#/components/schemas/Dealer/properties/vehicles'
+
+    UpdateDealerDTO:
+      type: object
+      required:
+        - _id
+      properties:
+        _id:
+          type: string
+        name:
+          $ref: '#/components/schemas/Dealer/properties/name'
+        vehicles:
+          $ref: '#/components/schemas/Dealer/properties/vehicles'
+    Dealer:
+      type: object
+      required:
+        - _id
+        - __v
+        - name
+        - vehicles
+        - creationDate
+        - lastUpdateDate
+      properties:
+        name:
+          type: string
+        vehicles:
+          type: array
+          items:
+            type: string
+      allOf:
+        - $ref: '#/components/schemas/Timestamps'
+        - $ref: '#/components/schemas/MongoDocument'
+    OkResponse:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+    ErrorResponse:
+      type: object
+      required:
+        - data
+      properties:
+        error:
+          type: object
+          properties:
+            type:
+              type: string
+            message:
+              type: string
+
+    VehicleResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Vehicle'
+    VehiclesResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Vehicle'
+
+    DealerResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Dealer'
+    DealersResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Dealer'
+
+    DeleteResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            acknowledged:
+              type: boolean
+            deletedCount:
+              type: number
+
+
+paths:
+  /vehicle:
+    get:
+      parameters:
+        - in: query
+          name: dealer
+      description: Get all vehicles, optionally filter by dealer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehiclesResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      description: Create a new vehicle
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateVehicleDTO'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleResponse'
+        '400':
+          description: User error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Entity not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    patch:
+      description: Update a new vehicle
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateVehicleDTO'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleResponse'
+        '400':
+          description: User error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Entity not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+
+  /vehicle/{id}:
+    parameters:
+      - in: path
+        name: id
+    delete:
+      description: Delete vehicle
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResponse'
+        '400':
+          description: User error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Entity not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /dealer:
+    get:
+      description: Get all dealers
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DealersResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      description: Create a new dealer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDealerDTO'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DealerResponse'
+        '400':
+          description: User error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Entity not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    patch:
+      description: Update a dealer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateDealerDTO'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DealerResponse'
+        '400':
+          description: User error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Entity not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+
+  /dealer/{id}:
+    parameters:
+      - in: path
+        name: id
+    delete:
+      description: Delete a dealer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResponse'
+        '400':
+          description: User error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Entity not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'

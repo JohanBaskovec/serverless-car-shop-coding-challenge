@@ -1,0 +1,127 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VehicleController createVehicle() should return an error when no body provided 1`] = `
+{
+  "body": "{"error":{"type":"MissingRequestBody","message":"Missing body in HTTP request."}}",
+  "statusCode": 400,
+}
+`;
+
+exports[`VehicleController createVehicle() should return an error when there are missing fields 1`] = `
+{
+  "body": "{"error":{"type":"ValidationError","message":"Vehicle validation failed: dealer: Path \`dealer\` is required., color: Path \`color\` is required., vehicleType: Path \`vehicleType\` is required., mileage: Path \`mileage\` is required., fuelType: Path \`fuelType\` is required., transmission: Path \`transmission\` is required., vehicleModel: Path \`vehicleModel\` is required., make: Path \`make\` is required."}}",
+  "statusCode": 400,
+}
+`;
+
+exports[`VehicleController createVehicle() should return an error when trying to use an invalid value 1`] = `
+{
+  "body": "{"error":{"type":"ValidationError","message":"Vehicle validation failed: fuelType: \`invalid-fuel-type\` is not a valid enum value for path \`fuelType\`."}}",
+  "statusCode": 400,
+}
+`;
+
+exports[`VehicleController createVehicle() should return an error when using an invalid dealer id 1`] = `
+{
+  "body": "{"error":{"type":"ValidationError","message":"Vehicle validation failed: dealer: Cast to ObjectId failed for value \\"not-an-id\\" (type string) at path \\"dealer\\" because of \\"BSONError\\""}}",
+  "statusCode": 400,
+}
+`;
+
+exports[`VehicleController getAllVehicles() should return an empty array if there are no vehicles 1`] = `
+{
+  "body": "{"data":[]}",
+  "statusCode": 200,
+}
+`;
+
+exports[`VehicleController getAllVehicles() should return vehicles when filtering by dealer 1`] = `
+{
+  "body": "{"data":[{"_id":"644170e85d3ab81e12fcca7c","make":"make1","vehicleModel":"model1","transmission":"manual","fuelType":"lpg","mileage":0,"vehicleType":"coupe","color":"blue","dealer":"644171318ce5b4f5098621cb","creationDate":"2010-10-10T00:00:00.000Z","lastUpdateDate":"2010-10-10T00:00:00.000Z","__v":0},{"_id":"644170e85d3ab81e12fcca7e","make":"make2","vehicleModel":"model2","transmission":"automatic","fuelType":"lpg","mileage":10,"vehicleType":"van","color":"red","dealer":"644171318ce5b4f5098621cb","creationDate":"2012-10-10T00:00:00.000Z","lastUpdateDate":"2012-10-10T00:00:00.000Z","__v":0}]}",
+  "statusCode": 200,
+}
+`;
+
+exports[`VehicleController getAllVehicles() should return vehicles when there are vehicles 1`] = `
+{
+  "body": "{"data":[{"_id":"644170e85d3ab81e12fcca7c","make":"make1","vehicleModel":"model1","transmission":"manual","fuelType":"lpg","mileage":0,"vehicleType":"coupe","color":"blue","dealer":"644171318ce5b4f5098621cb","creationDate":"2010-10-10T00:00:00.000Z","lastUpdateDate":"2010-10-10T00:00:00.000Z","__v":0},{"_id":"644170e85d3ab81e12fcca7e","make":"make2","vehicleModel":"model2","transmission":"automatic","fuelType":"lpg","mileage":10,"vehicleType":"van","color":"red","dealer":"644171318ce5b4f5098621cb","creationDate":"2012-10-10T00:00:00.000Z","lastUpdateDate":"2012-10-10T00:00:00.000Z","__v":0},{"_id":"644170e85d3ab81e12fcca7f","make":"make2","vehicleModel":"model2","transmission":"automatic","fuelType":"lpg","mileage":10,"vehicleType":"van","color":"red","dealer":"644171318ce5b4f5098621ca","creationDate":"2011-10-10T00:00:00.000Z","lastUpdateDate":"2011-10-10T00:00:00.000Z","__v":0}]}",
+  "statusCode": 200,
+}
+`;
+
+exports[`VehicleController removeVehicle() should remove the vehicle when the request is correct 1`] = `
+{
+  "body": "{"data":{"acknowledged":true,"deletedCount":1}}",
+  "statusCode": 200,
+}
+`;
+
+exports[`VehicleController removeVehicle() should return an error when no id provided 1`] = `
+{
+  "body": "{"error":{"type":"MissingPathParametersError","message":"Missing path parameters: id"}}",
+  "statusCode": 400,
+}
+`;
+
+exports[`VehicleController removeVehicle() should return an error when vehicle with id does not exist 1`] = `
+{
+  "body": "{"error":{"type":"EntityDoesNotExistError","message":"Vehicle with id 754171318ce5b4f5098621cb does not exist."}}",
+  "statusCode": 404,
+}
+`;
+
+exports[`VehicleController updateVehicle() should return an error when no body provided 1`] = `
+{
+  "body": "{"error":{"type":"MissingRequestBody","message":"Missing body in HTTP request."}}",
+  "statusCode": 400,
+}
+`;
+
+exports[`VehicleController updateVehicle() should return an error when no id provided 1`] = `
+{
+  "body": "{"error":{"type":"MissingKeyInJSONBodyError","message":"Missing key in JSON: _id"}}",
+  "statusCode": 400,
+}
+`;
+
+exports[`VehicleController updateVehicle() should return an error when using invalid fuel type 1`] = `
+{
+  "body": "{"error":{"type":"ValidationError","message":"Validation failed: fuelType: \`invalid fuel type\` is not a valid enum value for path \`fuelType\`."}}",
+  "statusCode": 400,
+}
+`;
+
+exports[`VehicleController updateVehicle() should return an error when using invalid transmission 1`] = `
+{
+  "body": "{"error":{"type":"ValidationError","message":"Validation failed: transmission: \`invalid transmission\` is not a valid enum value for path \`transmission\`."}}",
+  "statusCode": 400,
+}
+`;
+
+exports[`VehicleController updateVehicle() should return an error when using mileage of wrong type 1`] = `
+{
+  "body": "{"error":{"type":"CastError","message":"Cast to Number failed for value \\"invalid mileage\\" (type string) at path \\"mileage\\""}}",
+  "statusCode": 400,
+}
+`;
+
+exports[`VehicleController updateVehicle() should return an error when vehicle with id does not exist 1`] = `
+{
+  "body": "{"error":{"type":"EntityDoesNotExistError","message":"Vehicle with id 754171318ce5b4f5098621cb does not exist."}}",
+  "statusCode": 404,
+}
+`;
+
+exports[`VehicleController updateVehicle() should return an error with empty dealer id 1`] = `
+{
+  "body": "{"error":{"type":"BSONError","message":"Argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer"}}",
+  "statusCode": 400,
+}
+`;
+
+exports[`VehicleController updateVehicle() should return an error with empty id 1`] = `
+{
+  "body": "{"error":{"type":"CastError","message":"Cast to ObjectId failed for value \\"\\" (type string) at path \\"_id\\" for model \\"Vehicle\\""}}",
+  "statusCode": 400,
+}
+`;

@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DealerController createDealer() should return an error when there are missing fields 1`] = `
+{
+  "body": "{"error":{"type":"ValidationError","message":"Dealer validation failed: name: Path \`name\` is required."}}",
+  "statusCode": 400,
+}
+`;
+
+exports[`DealerController createDealer() should return an error when using an invalid vehicles id 1`] = `
+{
+  "body": "{"error":{"type":"ValidationError","message":"Dealer validation failed: vehicles.0: Cast to [ObjectId] failed for value \\"[ 'not-an-id' ]\\" (type string) at path \\"vehicles.0\\" because of \\"CastError\\", name: Path \`name\` is required."}}",
+  "statusCode": 400,
+}
+`;
+
+exports[`DealerController createDealer() should return an error when using string type for vehicles 1`] = `
+{
+  "body": "{"error":{"type":"ValidationError","message":"Dealer validation failed: vehicles.0: Cast to [ObjectId] failed for value \\"[ '' ]\\" (type string) at path \\"vehicles.0\\" because of \\"CastError\\", name: Path \`name\` is required."}}",
+  "statusCode": 400,
+}
+`;
+
+exports[`DealerController getAllDealers() should return an empty array if there are no dealers 1`] = `
+{
+  "body": "{"data":[]}",
+  "statusCode": 200,
+}
+`;
+
+exports[`DealerController getAllDealers() should return dealers when there are dealers 1`] = `
+{
+  "body": "{"data":[{"_id":"644171318ce5b4f5098621cb","name":"Dealer 1","vehicles":["644170e85d3ab81e12fcca7c","644170e85d3ab81e12fcca7e"],"creationDate":"2009-10-10T00:00:00.000Z","lastUpdateDate":"2009-10-10T00:00:00.000Z","__v":1},{"_id":"644171318ce5b4f5098621ca","name":"Dealer 2","vehicles":["644170e85d3ab81e12fcca7f"],"creationDate":"2008-10-10T00:00:00.000Z","lastUpdateDate":"2008-10-10T00:00:00.000Z","__v":1}]}",
+  "statusCode": 200,
+}
+`;
+
+exports[`DealerController removeDealer() should remove the dealer when the request is correct 1`] = `
+{
+  "body": "{"data":{"acknowledged":true,"deletedCount":1}}",
+  "statusCode": 200,
+}
+`;
+
+exports[`DealerController removeDealer() should return an error when dealer with id does not exist 1`] = `
+{
+  "body": "{"error":{"type":"EntityDoesNotExistError","message":"Dealer with id 754171318ce5b4f5098621cb does not exist."}}",
+  "statusCode": 404,
+}
+`;
+
+exports[`DealerController removeDealer() should return an error when no id provided 1`] = `
+{
+  "body": "{"error":{"type":"MissingPathParametersError","message":"Missing path parameters: id"}}",
+  "statusCode": 400,
+}
+`;
+
+exports[`DealerController removeDealer() should return an error when trying to delete a dealer that has vehicles 1`] = `
+{
+  "body": "{"error":{"type":"ConstraintError","message":"Dealer has vehicles, delete them first before deleting the dealer."}}",
+  "statusCode": 400,
+}
+`;
+
+exports[`DealerController updateDealer() should return an error when dealer with id does not exist 1`] = `
+{
+  "body": "{"error":{"type":"EntityDoesNotExistError","message":"Dealer with id 754171318ce5b4f5098621cb does not exist."}}",
+  "statusCode": 404,
+}
+`;
+
+exports[`DealerController updateDealer() should return an error when removing vehicles 1`] = `
+{
+  "body": "{"error":{"type":"ConstraintError","message":"Impossible to delete vehicle 644170e85d3ab81e12fcca7c from the dealer, as it wouldn't belong to a dealer anymore."}}",
+  "statusCode": 400,
+}
+`;

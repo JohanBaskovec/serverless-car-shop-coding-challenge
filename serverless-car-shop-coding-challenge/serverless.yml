@@ -1,0 +1,69 @@
+service: jb-car-shop-challenge
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: eu-central-1
+  environment:
+    CODING_CHALLENGE_ENV: ${opt:stage, 'dev'}
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
+
+package:
+  include:
+    - config/.env.dev
+    - config/.env.prod
+
+functions:
+  getVehicles:
+    handler: src/handlers.getVehicles
+    events:
+      - httpApi:
+          path: /vehicle
+          method: get
+  createVehicle:
+    handler: src/handlers.createVehicle
+    events:
+      - httpApi:
+          path: /vehicle
+          method: post
+  updateVehicle:
+    handler: src/handlers.updateVehicle
+    events:
+      - httpApi:
+          path: /vehicle
+          method: patch
+  removeVehicle:
+    handler: src/handlers.removeVehicle
+    events:
+      - httpApi:
+          path: /vehicle/{id}
+          method: delete
+
+  getDealers:
+    handler: src/handlers.getDealers
+    events:
+      - httpApi:
+          path: /dealer
+          method: get
+  createDealer:
+    handler: src/handlers.createDealer
+    events:
+      - httpApi:
+          path: /dealer
+          method: post
+  updateDealer:
+    handler: src/handlers.updateDealer
+    events:
+      - httpApi:
+          path: /dealer
+          method: patch
+  removeDealer:
+    handler: src/handlers.removeDealer
+    events:
+      - httpApi:
+          path: /dealer/{id}
+          method: delete
